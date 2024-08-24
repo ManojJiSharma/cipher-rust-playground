@@ -40,18 +40,21 @@ function App() {
         }
 
         // Post request to compile endpoint
-        Axios.post(`http://localhost:8000/compile`, {
+        Axios.post('http://localhost:8000/compile', {
             code: userCode,
             language: userLang,
             input: userInput
-        }).then((res) => {
+        })
+        .then((res) => {
+            console.log('Response:', res.data); // Check the response data
             setUserOutput(res.data.stdout || res.data.stderr);
-        }).then(() => {
-            setLoading(false);
-        }).catch((err) => {
-            console.error(err);
+        })
+        .catch((err) => {
+            console.error('Error:', err); // Log errors
             setUserOutput("Error: " + (err.response ? err.response.data.error : err.message));
-            setLoading(false);
+        })
+        .finally(() => {
+            setLoading(false); // Ensure loading state is updated
         });
     }
 

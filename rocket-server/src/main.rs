@@ -1,6 +1,7 @@
 #[macro_use] extern crate rocket;
 
 use rocket::serde::{json::Json, Serialize, Deserialize};
+use rocket_cors::{Cors, CorsOptions};
 use std::fs;
 use tempfile::NamedTempFile;
 
@@ -34,5 +35,15 @@ async fn compile(request: Json<CompileRequest>) -> Json<CompileResponse> {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![compile])
+    // Configure CORS
+    let cors = CorsOptions {
+        allowed_origins: rocket_cors::AllowedOrigins::all(),
+        ..Default::default()
+    }
+    .to_cors()
+    .expect("Error creating CORS middleware");
+
+    rocket::build()
+        .attach(cors)
+        .mount("/", routes![compile])
 }
