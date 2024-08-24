@@ -1,0 +1,11 @@
+[package]
+name = "rocket-server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5.1", features = ["json"] }  # Enable the 'json' feature
+rocket_codegen = "0.5.1"  # Ensure this matches Rocket's version
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tempfile = "3.3.0"  # Or the latest version

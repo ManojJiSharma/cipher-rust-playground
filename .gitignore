@@ -1,1 +1,4 @@
 /target
+/rocket-server/target
+
+**/*.rs.bk
